@@ -10,20 +10,25 @@
 function migrate_demo_drush_command() {
   $items = array();
 
-  $items['generate-countries'] = array(
-    'description' => 'Generate taxonomy terms for countries.',
+  $items['populate-all'] = array(
+    'description' => 'Create all sample data.',
     'drupal dependencies' => array('migrate_demo'),
-    'callback' => 'migrate_demo_generate_countries',
+    'callback' => 'migrate_demo_populate_all',
   );
-  $items['generate-organisations'] = array(
-    'description' => 'Generate sample organisation nodes.',
+  $items['populate-countries'] = array(
+    'description' => 'Create taxonomy terms for countries.',
     'drupal dependencies' => array('migrate_demo'),
-    'callback' => 'migrate_demo_generate_organisations',
+    'callback' => 'migrate_demo_populate_countries',
   );
-  $items['generate-users'] = array(
-    'description' => 'Generate sample users.',
+  $items['populate-organisations'] = array(
+    'description' => 'Create sample organisation nodes.',
     'drupal dependencies' => array('migrate_demo'),
-    'callback' => 'migrate_demo_generate_users',
+    'callback' => 'migrate_demo_populate_organisations',
+  );
+  $items['populate-users'] = array(
+    'description' => 'Create sample users.',
+    'drupal dependencies' => array('migrate_demo'),
+    'callback' => 'migrate_demo_populate_users',
   );
 
   return $items;
@@ -34,19 +39,34 @@ function migrate_demo_drush_command() {
  */
 function migrate_demo_drush_help($section) {
   switch ($section) {
-    case 'drush:generate-countries':
-      return 'Generate taxonomy terms for countries.';
-    case 'drush:generate-organisations':
-      return 'Generate sample organisation nodes.';
-    case 'drush:generate-users':
-      return 'Generate sample users.';
+
+    case 'drush:populate-all':
+      return 'Create all sample data.';
+
+    case 'drush:populate-countries':
+      return 'Create taxonomy terms for countries.';
+
+    case 'drush:populate-organisations':
+      return 'Create sample organisation nodes.';
+
+    case 'drush:populate-users':
+      return 'Create sample users.';
   }
 }
 
 /**
  * Drush command callback.
  */
-function migrate_demo_generate_users() {
+function migrate_demo_populate_all() {
+  migrate_demo_populate_countries();
+  migrate_demo_populate_users();
+  migrate_demo_populate_organisations();
+}
+
+/**
+ * Drush command callback.
+ */
+function migrate_demo_populate_users() {
   $response = drupal_http_request('https://randomuser.me/api/?results=100');
 
   if ($response->code != 200) {
@@ -84,21 +104,21 @@ function migrate_demo_generate_users() {
 
     // $user->field_country[LANGUAGE_NONE][0]['tid'] = $country_tids[array_rand($country_tids)];
 
-    $file = system_retrieve_file($data->picture->large, 'public://pictures', TRUE, FILE_EXISTS_RENAME);
-    $user->picture = $file->fid;
+    // $file = system_retrieve_file($data->picture->large, 'public://pictures', TRUE, FILE_EXISTS_RENAME);
+    // $user->picture = $file->fid;
 
     user_save($user);
   }
 
   $total = count($json->results);
 
-  return "Saved {$total} user accounts.";
+  drush_print("Created {$total} user accounts.");
 }
 
 /**
  * Drush command callback.
  */
-function migrate_demo_generate_organisations() {
+function migrate_demo_populate_organisations() {
   // Wipe out all existing nodes.
   $nodes = entity_load('node');
   node_delete_multiple(array_keys($nodes));
@@ -155,13 +175,13 @@ function migrate_demo_generate_organisations() {
 
   $total = count($organisations);
 
-  return "Saved {$total} organisation nodes.";
+  drush_print("Created {$total} organisation nodes.");
 }
 
 /**
  * Drush command callback.
  */
-function migrate_demo_generate_countries() {
+function migrate_demo_populate_countries() {
   $vocabulary = taxonomy_vocabulary_machine_name_load('countries');
 
   // Clear all existing terms first.
@@ -169,7 +189,7 @@ function migrate_demo_generate_countries() {
     taxonomy_term_delete($term->tid);
   }
 
-  $countries = json_decode(file_get_contents('https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json'));
+  $countries = json_decode(file_get_contents(__DIR__ . '/data/countries.json'));
 
   $items = $codes = array();
 
@@ -202,48 +222,5 @@ function migrate_demo_generate_countries() {
 
   $total = count($items);
 
-  return "Saved {$total} taxonomy terms.";
+  drush_print("Created {$total} taxonomy terms.");
 }
-
-// https://en.wikipedia.org/wiki/List_of_fictional_Microsoft_companies
-$companies = array(
-  "A. Datum Corporation",
-  "AdventureWorks Cycles",
-  "Alpine Ski House",
-  "Awesome Computers",
-  "Baldwin Museum of Science",
-  "Blue Yonder Airlines",
-  "City Power & Light",
-  "Coho Vineyard",
-  "Coho Winery",
-  "Coho Vineyard & Winery",
-  "Consolidated Messenger",
-  "Contoso Ltd.",
-  "Contoso Bank",
-  "Contoso Hotel (no longer owned by Microsoft)",
-  "Contoso Pharmaceuticals",
-  "Electronic, Inc.",
-  "Fabrikam, Inc.",
-  "Fourth Coffee",
-  "FusionTomo",
-  "Graphic Design Institute",
-  "Humongous Insurance",
-  "Itexamworld.com",
-  "LitWare Inc.",
-  "Lucerne Publishing",
-  "Margie's Travel",
-  "Northridge Video",
-  "Northwind Traders",
-  "Parnell Aerospace",
-  "ProseWare, Inc.",
-  "School of Fine Art",
-  "Southbridge Video",
-  "StrikeStrike",
-  "TailSpin Toys",
-  "Tasmanian Traders",
-  "The Phone Company",
-  "Trey Research Inc.",
-  "WingTip Toys",
-  "Wide World Importers",
-  "Woodgrove Bank"
-);

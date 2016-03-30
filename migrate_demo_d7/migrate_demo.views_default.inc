@@ -31,11 +31,47 @@ function migrate_demo_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'uid' => 'uid',
+    'tid' => 'tid',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'tid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['empty_table'] = TRUE;
   /* Header: Global: Unfiltered text */
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
   $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['content'] = 'Listing of various NGOs operating in Thailand. From <a href="http://p2pfoundation.net/NGOs_in_Thailand">http://p2pfoundation.net/NGOs_in_Thailand</a>';
+  /* No results behavior: Global: Unfiltered text */
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area_text_custom']['content'] = 'No organisations have been created.';
   /* Relationship: Entity Reference: Referenced Entity */
   $handler->display->display_options['relationships']['field_members_target_id']['id'] = 'field_members_target_id';
   $handler->display->display_options['relationships']['field_members_target_id']['table'] = 'field_data_field_members';
@@ -66,7 +102,7 @@ function migrate_demo_views_default_views() {
   $handler->display->display_options['fields']['tid']['field'] = 'tid';
   $handler->display->display_options['fields']['tid']['relationship'] = 'field_countries_target_id';
   $handler->display->display_options['fields']['tid']['group_type'] = 'count_distinct';
-  $handler->display->display_options['fields']['tid']['label'] = 'Other countries';
+  $handler->display->display_options['fields']['tid']['label'] = 'Other locations';
   $handler->display->display_options['fields']['tid']['separator'] = '';
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';

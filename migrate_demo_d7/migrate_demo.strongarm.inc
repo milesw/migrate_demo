@@ -134,8 +134,8 @@ function migrate_demo_strongarm() {
       'display' => array(
         'summary' => array(
           'default' => array(
-            'weight' => '3',
-            'visible' => TRUE,
+            'weight' => '2',
+            'visible' => FALSE,
           ),
         ),
       ),
