@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * Migrate Demo module.
+ */
+
+/**
+ * Implements hook_user_format_name_alter().
+ *
+ * Format displayed usernames to look a bit nicer.
+ */
+function migrate_demo_user_format_name_alter(&$name, $account) {
+  if (empty($account->field_first_name) && empty($account->field_last_name)) {
+    return;
+  }
+
+  $first_name = $account->field_first_name->value;
+  $last_name = $account->field_last_name->value;
+  $full_name = trim("{$first_name} {$last_name}");
+
+  if ($full_name) {
+    $name = $full_name;
+  }
+}

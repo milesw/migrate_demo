@@ -1,0 +1,15 @@
+id: users
+label: Users
+
+source:
+  plugin: d7_user
+
+destination:
+  plugin: entity:user
+
+process:
+  name: name
+  mail: mail
+  status: status
+  field_first_name: field_given_name
+  field_last_name: field_family_name

@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * Code for the Migrate Demo feature.
+ */
+
+include_once 'migrate_demo.features.inc';
+/**
+ * @file
+ * Migrate Demo module file.
+ */
+
+/**
+ * Implements hook_username_alter().
+ *
+ * Formats full names for display instead of usernames.
+ */
+function migrate_demo_username_alter(&$name, $account) {
+  $user = user_load($account->uid);
+
+  $first = field_get_items('user', $user, 'field_given_name');
+  $last = field_get_items('user', $user, 'field_family_name');
+
+  if ($first && $last) {
+    $name = $first[0]['safe_value'] . ' ' . $last[0]['safe_value'];
+  }
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function migrate_demo_page_alter(&$page) {
+  drupal_add_css(drupal_get_path('module', 'migrate_demo') . '/migrate_demo.css');
+}

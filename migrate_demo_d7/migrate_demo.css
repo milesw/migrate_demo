@@ -1,0 +1,17 @@
+/* Clean up Bartik to make demo content more readable. */
+
+.node .field {
+  margin: 2em 0;
+}
+
+.node .meta {
+  margin: 1.5em 0 2em 0;
+}
+
+.breadcrumb {
+  display: none;
+}
+
+.views-table tbody {
+  font-size: 1.2em;
+}

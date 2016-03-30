@@ -1,0 +1,16 @@
+id: countries
+label: Countries
+
+source:
+  plugin: taxonomy_term
+  vocabulary:
+    - 2
+
+destination:
+  plugin: entity:taxonomy_term
+
+process:
+  name: name
+  vid:
+    plugin: default_value
+    default_value: countries

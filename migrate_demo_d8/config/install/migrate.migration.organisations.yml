@@ -1,0 +1,48 @@
+id: organisations
+label: Organisations
+migration_dependencies:
+  required:
+    - users
+    - countries
+
+source:
+  plugin: d7_node
+  node_type: organisation
+
+destination:
+  plugin: 'entity:node'
+
+process:
+  type:
+    plugin: default_value
+    default_value: organisation
+  title: title
+  status: status
+  body: body
+  uid:
+    plugin: migration
+    migration: users
+    source: node_uid
+  field_website:
+    plugin: extract
+    source: field_website
+    index:
+      - url
+  field_members:
+    -
+      plugin: extract
+      source: field_members
+      index:
+        - target_id
+    -
+      plugin: migration
+      migration: users
+  field_countries:
+    -
+      plugin: extract
+      source: field_countries
+      index:
+        - target_id
+    -
+      plugin: migration
+      migration: countries
