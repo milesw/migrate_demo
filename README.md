@@ -1,6 +1,6 @@
-# Intro to Migrate in Drupal 8
+# Demo: Intro to Migrate in Drupal 8
 
-This is a demo prepared for the Bangkok Drupal Meetup on March 31, 2016. It demonstrates a basic Drupal 7 to Drupal 8 content migration using the Migrate module and Drush. Content being migrated includes: organisations (nodes), countries (taxonony terms), and people (users). Drush scripts to populate sample content are included. 
+This is demo code prepared for the Bangkok Drupal Meetup on March 31, 2016. It demonstrates a basic Drupal 7 to Drupal 8 content migration using the Migrate module and Drush. Content being migrated includes: organisations (nodes), countries (taxonony terms), and people (users). Drush scripts to populate sample content are included. 
 
 Slides: https://docs.google.com/presentation/d/1O5UpI0pJj7Yi1nhj8ZtEzbZzzAk1qUso7-n4uggenp0/pub?start=false&loop=false&delayms=5000
 
