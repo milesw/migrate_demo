@@ -36,3 +36,12 @@ Slides: https://docs.google.com/presentation/d/1O5UpI0pJj7Yi1nhj8ZtEzbZzzAk1qUso
 7. drush migrate-status (if you see totals, database connection is good)
 8. drush migrate-import --all
 
+
+## Editing migrations
+
+When you change the YAML config for a migration you need to reload the config.
+The recommended way seems to be reinstalling the module, but that can be a hassle.
+
+The config_devel module includes a drush command for reloading config:
+
+    drush config-devel-import-one path/to/migrate.migration.users.yml
