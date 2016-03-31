@@ -42,5 +42,6 @@ features[variable][] = menu_parent_organisation
 features[variable][] = node_options_organisation
 features[variable][] = node_preview_organisation
 features[variable][] = node_submitted_organisation
+features[variable][] = site_frontpage
 features[views_view][] = ngos_in_thailand
 features_exclude[dependencies][ctools] = ctools
